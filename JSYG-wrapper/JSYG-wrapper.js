@@ -69,6 +69,8 @@ export default   function JSYG(arg,context) {
 
 	if (typeof arg === 'function') {
 		console.log("function");
+		     console.trace();
+		    throw new Error("Error function");
 		return
         }
     var NS = {
@@ -132,24 +134,24 @@ export default   function JSYG(arg,context) {
         }
 */
 
-	// zepto.js ---------------------
         if (array) {
            merge(this, array  );
         } else {
            merge(this,  $(arg,context) );
         }
 
-	  console.log("result", this)			
+	  //console.log("result", this)			
         return this;
     }
 	
     JSYG.fn = JSYG.prototype = new $();
 		
-    JSYG.prototype.constructor = JSYG;
+    //JSYG.prototype.constructor = JSYG;
 	
     /**
      * Liste des propriétés SVG stylables en css
      */
+
     JSYG.svgCssProperties = [ 'font','font-family','font-size','font-size-adjust','font-stretch','font-style','font-variant','font-weight', 'direction','letter-spacing','text-decoration','unicode-bidi','word-spacing', 'clip','color','cursor','display','overflow','visibility', 'clip-path','clip-rule','mask','opacity', 'enable-background','filter','flood-color','flood-opacity','lighting-color','stop-color','stop-opacity','pointer-events', 'color-interpolation','color-interpolation-filters','color-profile','color-rendering','fill','fill-opacity','fill-rule','image-rendering','marker','marker-end','marker-mid','marker-start','shape-rendering','stroke','stroke-dasharray','stroke-dashoffset','stroke-linecap','stroke-linejoin','stroke-miterlimit','stroke-opacity','stroke-width','text-rendering','alignment-baseline','baseline-shift','dominant-baseline','glyph-orientation-horizontal','glyph-orientation-vertical','kerning','text-anchor','writing-mode' ];
     /**
      * Liste des balises SVG
@@ -551,6 +553,7 @@ export default   function JSYG(arg,context) {
         return offset;
     };
 	
+/*
     (function() {
 		
         var hookWidthOri = $.cssHooks.width,
@@ -640,7 +643,7 @@ export default   function JSYG(arg,context) {
         };
 		
     }());
-	
+*/
     ////////////////////////////////////////////////////////////
     //Ces fonctions font appel dans jQuery à this.constructor, ce qui peut
     //mettre le bazar quand on surcharge les constructeurs
@@ -1351,7 +1354,6 @@ export default   function JSYG(arg,context) {
                 if (tag == 'svg') {
                     
                     parent = this.parent();
-                    
                     if (parent.isSVG()) {
                         
                         dim = {
@@ -2898,7 +2900,7 @@ export default   function JSYG(arg,context) {
     SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function(toElement) {
         return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
     };
-    
+    /*
     JSYG(function() {
         
         if (!svg || typeof document === "undefined") return false;
@@ -2961,7 +2963,7 @@ export default   function JSYG(arg,context) {
         })();
         
     });
-    
+    */
     
     var cptPlugin = 0;
     
