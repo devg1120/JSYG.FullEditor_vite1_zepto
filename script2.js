@@ -37,18 +37,22 @@ window.addEventListener('DOMContentLoaded', function() {
     });
 
     ["Front","Back","ToFront","ToBack"].forEach(type => {
-
-        //$(`#move${type}`).on("click",() => {
-        //    svgEditor[`moveTarget${type}`]();
-        //});
+/*
+        $(`#move${type}`).on("click",() => {
+            //svgEditor[`moveTarget${type}`]();
+            svgEditor[`move${type}`]();
+        });
+*/
 
         let selector = `#move${type}`
         let eventName = 'click'
 
         let handler = () => {
-            svgEditor[`moveTarget${type}`]();
+            //svgEditor[`moveTarget${type}`]();
+            svgEditor[`move${type}`]();
         };
 	document.querySelector(selector).addEventListener(eventName, handler, false)
+	
     });
 
     //$("#insertText").on("click",function() {

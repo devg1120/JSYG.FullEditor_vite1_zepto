@@ -1,14 +1,3 @@
-/*jshint forin:false, eqnull:true */
-/*
-(function(root,factory) {
-
-    if (typeof module == "object" && typeof module.exports == "object" ) module.exports = factory( require("jquery") );
-    else if (typeof define == "function" && define.amd) define("jsyg-wrapper",["jquery"],factory);
-    else if (!root.jQuery) throw new Error("jQuery is needed");
-    else root.JSYG = factory(root.jQuery);	
-	
-})(this,function($) {
-*/		
 
 import strUtils  from  "jsyg-strutils";
 import Matrix from "jsyg-matrix"
@@ -255,15 +244,6 @@ export default   function JSYG(arg,context) {
             });
         }
         else if (name == "href") return xlinkHref.call(this,value);
-        /*else if (name == "viewBox" || name== "viewbox"){
-			
-            if (value === undefined) return this[0].getAttribute("viewBox");
-			
-            return this.each(function() {
-                if (JSYG.svgViewBoxTags.indexOf(this.tagName) !=-1)
-                    this.setAttribute("viewBox",value);					
-            });
-        }*/
         else {
 			
             if (value === undefined) {
@@ -278,6 +258,7 @@ export default   function JSYG(arg,context) {
                 else $.attr(this,name,value); 
             });			
         }
+	
     };
     
     JSYG.prototype.removeAttr = function(name) {
@@ -3406,7 +3387,6 @@ export default   function JSYG(arg,context) {
         var path;
         
         var $node = this;
-        /*Include only names and IDs since you can always programmatically add/remove classes*/
         var uniqueTags = ['name', 'id'];
         
         while ($node.length) {
@@ -3459,6 +3439,7 @@ export default   function JSYG(arg,context) {
         return path;
     };
 
+
 (function add2JSYG() {
     
     for (var n in strUtils) JSYG[n] = strUtils[n];
@@ -3469,5 +3450,3 @@ export default   function JSYG(arg,context) {
     
 }());
 
-//return JSYG;
-//});
