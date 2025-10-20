@@ -34,6 +34,7 @@
 //import JSYG from "jsyg"
 import JSYG                from "../JSYG-wrapper/JSYG-wrapper.js"
 import StdConstruct        from "../JSYG.StdConstruct/JSYG.StdConstruct.js"
+import Resizable      from "../JSYG.Resizable/JSYG.Resizable.js"
 
  /*   "use strict";*/
     
@@ -509,7 +510,8 @@ export default    function ZoomAndPan(arg,opt) {
         
         if (width == null && height == null) return { width : innerWidth, height : innerHeight };
         
-        if (JSYG.isPlainObject(width)) {
+        //if (JSYG.isPlainObject(width)) {
+        if ($.isPlainObject(width)) {
             opt = width;
             keepViewBox = opt.keepViewBox || height;
             height = opt.height;

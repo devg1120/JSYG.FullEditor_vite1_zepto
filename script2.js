@@ -323,17 +323,21 @@ window.addEventListener('DOMContentLoaded', function() {
          target.addEventListener(eventName, handler, false)
     }
 
-
+/*
     $('#drawShapes').on({
         "show.bs.collapse":function () {
+             console.log("drawShapes  show");
             $('#shape').trigger("change");
         },
         "hide.bs.collapse":function() {
             svgEditor.disableShapeDrawer();
             svgEditor.disableInsertElement();
             svgEditor.enableSelection();
+             console.log("drawShapes  hide");
         }
     });
+*/
+
 /*
     selector = 
     eventName = 'click'

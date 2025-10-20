@@ -1129,7 +1129,8 @@ export default class FullEditor extends JSYG {
         zoomTo(percentage) {
             
             if (percentage == "canvas") this.zoomAndPan.fitToCanvas().scale(0.95);
-            else if (JSYG.isNumeric(percentage)) this.zoomAndPan.scaleTo( percentage/100 );
+            //else if (JSYG.isNumeric(percentage)) this.zoomAndPan.scaleTo( percentage/100 );
+            else if ($.isNumeric(percentage)) this.zoomAndPan.scaleTo( percentage/100 );
             else throw new Error("argument must be numeric or 'canvas' string");
             
             this.trigger("zoom",this,this.getDocument());
