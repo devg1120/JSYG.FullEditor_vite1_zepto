@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', function() {
         //    svgEditor.align(type);
         //})
 
-        let selector = `#align${JSYG.ucfirst(type)}`;
+        let selector = `#align${JSYG.ucfirst(type)}`;   //TODO
         let eventName = 'click'
 
         let handler = () => {
@@ -86,7 +86,10 @@ window.addEventListener('DOMContentLoaded', function() {
     selector = "#newDocument"
     eventName = 'click'
     handler = () => {
-        svgEditor.newDocument( $('#width').val(), $('#height').val() );
+        //svgEditor.newDocument( $('#width').val(), $('#height').val() );
+        let w = document.querySelector('#width').value;
+        let h = document.querySelector('#height').value;
+        svgEditor.newDocument( w, h );
     };
     target = document.querySelector(selector)
     if (target) {
@@ -172,21 +175,24 @@ window.addEventListener('DOMContentLoaded', function() {
     //    $('#exampleChoice').modal();
     //});
 
+  /* TODO
     selector = '#openExample'
     eventName = 'click'
     handler = () => {
-        $('#exampleChoice').modal();
+        $('#exampleChoice').modal();    //TODO
     };
     target = document.querySelector(selector)
     if (target) {
          target.addEventListener(eventName, handler, false)
     }
+  */
 
     //$('#confirmExample').on("click",() => {
     //    $('#exampleChoice').modal("hide");
     //    svgEditor.loadURL(`examples/${$('#examples').val()}.svg`);
     //});
 
+/* TODO
     selector = '#confirmExample'
     eventName = 'click'
     handler = () => {
@@ -202,6 +208,7 @@ window.addEventListener('DOMContentLoaded', function() {
     if (target) {
          target.addEventListener(eventName, handler, false)
     }
+*/
 
     //svgEditor.on("load",() => {
     //    console.log("svgEditor  on load");
@@ -273,13 +280,17 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
     $('#viewPanel').on("hide.bs.collapse",() => {
+	    console.log("hide collapse");
         svgEditor.disableMousePan();
         $('#mousePan').removeClass("active");
     });
 /*
-    selector = 
-    eventName = 'click'
+    selector = '#viewPanel'
+    eventName = "hide.bs.collapse"
     handler = () => {
+        svgEditor.disableMousePan();
+        element = document.querySelector('#mousePan')
+	element.classList.remove("active")
     };
     target = document.querySelector(selector)
     if (target) {
@@ -546,7 +557,20 @@ window.addEventListener('DOMContentLoaded', function() {
 
     });
 
-    $('#print').on("click",() => { svgEditor.print(); });
+    //$('#print').on("click",() => { svgEditor.print(); });
+	
+    selector = '#print'
+    eventName = 'click'
+    handler = () => {
+        svgEditor.print();
+    };
+    target = document.querySelector(selector)
+    if (target) {
+         target.addEventListener(eventName, handler, false)
+    }
+
+
+
 
     svgEditor.registerKeyShortCut({
         "ctrl+c": svgEditor.copy,
