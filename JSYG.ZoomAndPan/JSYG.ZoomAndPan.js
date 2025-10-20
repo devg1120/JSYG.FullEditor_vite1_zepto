@@ -574,6 +574,8 @@ export default    function ZoomAndPan(arg,opt) {
         translY = transf.translateY,
         mtxInv = mtx.inverse(),
         bounds = this._getBounds();
+  console.trace();
+ console.log("mtxInv",mtxInv);
         
         if (!hidden) {
             
@@ -1069,9 +1071,20 @@ export default    function ZoomAndPan(arg,opt) {
      * Fonction exécutée sur évènement mouseWheel
      */
     MouseWheelZoom.prototype.wheel = function(e) {
-        
+        if (!this.zap.mousePan.enabled)  return;
+
+        console.dir(e)
+        let _scale = 0;
+        if ( e.originalEvent.deltaY < 0 ) {
+                _scale = 0.9;
+	} else {
+                _scale = 1.1;
+
+	}
         var innerFrame = new JSYG(this.zap.innerFrame),
-        scale = 1 + this.step * e.deltaY,
+        //scale = 1 + this.step * e.deltaY,
+        //scale = 1 + this.step * e.originalEvent.deltaY,
+	scale = _scale,
         animate = this.zap.animate,
         origin;
         
@@ -1087,7 +1100,11 @@ export default    function ZoomAndPan(arg,opt) {
         
         this.zap.animate = false;
         
-        this.zap.scale(scale,origin.x,origin.y);
+        console.log("scale", this.step, scale)
+        //this.zap.scale(scale,origin.x,origin.y);
+        //this.zap.scale(0.9);
+        //this.zap.scale(1.1);
+        this.zap.scale(scale);
         
         this.zap.animate = animate;
         

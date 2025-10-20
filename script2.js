@@ -266,7 +266,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 
-    $('.collapse').collapse({parent:"#accordion"});
+//    $('.collapse').collapse({parent:"#accordion"});
 /*
     selector = 
     eventName = 'click'
@@ -279,11 +279,12 @@ window.addEventListener('DOMContentLoaded', function() {
 */
 
 
-    $('#viewPanel').on("hide.bs.collapse",() => {
-	    console.log("hide collapse");
-        svgEditor.disableMousePan();
-        $('#mousePan').removeClass("active");
-    });
+//    $('#viewPanel').on("hide.bs.collapse",() => {
+//	    console.log("hide collapse");
+//        svgEditor.disableMousePan();
+//        $('#mousePan').removeClass("active");
+//    });
+
 /*
     selector = '#viewPanel'
     eventName = "hide.bs.collapse"
@@ -303,20 +304,25 @@ window.addEventListener('DOMContentLoaded', function() {
         $(this).addClass("active");
     });
 */
-    $('#mousePan').on("click",() =>  {   //GUSA
-        svgEditor.enableMousePan();
-        $(this).addClass("active");
-    });
-/*
-    selector = 
+
+
+    selector = '#mousePan'
     eventName = 'click'
-    handler = () => {
+    handler = function ()  {
+        svgEditor.enableMousePan();
+        if (!this.classList.contains("active")) {
+             svgEditor.enableMousePan();
+             this.classList.add("active");
+	} else {
+             svgEditor.disableMousePan(false);
+             this.classList.remove("active");
+	}
     };
     target = document.querySelector(selector)
     if (target) {
          target.addEventListener(eventName, handler, false)
     }
-*/
+
 
     $('#drawShapes').on({
         "show.bs.collapse":function () {
