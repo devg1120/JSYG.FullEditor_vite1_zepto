@@ -440,48 +440,52 @@ window.addEventListener('DOMContentLoaded', function() {
          target.addEventListener(eventName, handler, false)
     }
 */
-    $('#fitToCanvas').on("click",() => {
+
+//    $('#fitToCanvas').on("click",() => {
+//        svgEditor.zoomTo('canvas');
+//    });
+
+
+    selector = '#fitToCanvas'
+    eventName = 'click'
+    handler = () => {
         svgEditor.zoomTo('canvas');
-    });
-
-/*
-    selector = 
-    eventName = 'click'
-    handler = () => {
     };
     target = document.querySelector(selector)
     if (target) {
          target.addEventListener(eventName, handler, false)
     }
-*/
-    $('#fitToDoc').on("click",() => {
+
+//    $('#fitToDoc').on("click",() => {
+//       svgEditor.fitToDoc();
+//    });
+
+
+    selector = '#fitToDoc'
+    eventName = 'click'
+    handler = () => {
        svgEditor.fitToDoc();
-    });
-
-/*
-    selector = 
-    eventName = 'click'
-    handler = () => {
     };
     target = document.querySelector(selector)
     if (target) {
          target.addEventListener(eventName, handler, false)
     }
-*/
-    $('#realSize').on("click",() => {
+
+//    $('#realSize').on("click",() => {
+//        svgEditor.zoomTo(100);
+//    });
+
+
+    selector = '#realSize'
+    eventName = 'click'
+    handler = () => {
         svgEditor.zoomTo(100);
-    });
-
-/*
-    selector = 
-    eventName = 'click'
-    handler = () => {
     };
     target = document.querySelector(selector)
     if (target) {
          target.addEventListener(eventName, handler, false)
     }
-*/
+
 
 //    $('#zoomIn').on("click",() => {
 //        svgEditor.zoom(+10);
