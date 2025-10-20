@@ -36,7 +36,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
     });
 
-    ["Front","Back","ToFront","ToBack"].forEach(type => {
+  //  ["Front","Back","ToFront","ToBack"].forEach(type => {
+   ["Front","Back","Forwards","Backwards"].forEach(type => {
 /*
         $(`#move${type}`).on("click",() => {
             //svgEditor[`moveTarget${type}`]();
