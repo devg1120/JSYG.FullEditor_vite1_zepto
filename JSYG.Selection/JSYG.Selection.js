@@ -225,7 +225,7 @@ function each( obj, callback ) {
         this.deselectAll(e);
         
         //new JSYG(arg).each(function() { that.addElmt(this,e); });
-        each(arg, function() { that.addElmt(this,e); });
+        each(arg, function() { that.addElmt(this,e); });  // GUSA
 	    
         
         if (this.selected.length > 0) this.trigger('selectedlist',this.node,e,this.selected);
@@ -249,11 +249,15 @@ function each( obj, callback ) {
         
         var that = this,
         selected = this.selected.slice();
+        console.log("deselectAll")
         
-        new JSYG(this.list).removeClass(this.classSelected,this.classOver); //par précaution
+        //new JSYG(this.list).removeClass(this.classSelected,this.classOver); //par précaution
+	let eles = document.querySelectorAll(this.list);  //GUSA
+        eles.forEach( (ele) => {
+            ele.classList.remove(this.classSelected,this.classOver); //par précaution
+	});
         
         while (this.selected.length > 0) this.removeElmt(this.selected[0],e);
-        
         this.trigger('deselectedlist',this.node,e,selected);
         
         this.selectedOver.forEach(function(elmt) {
