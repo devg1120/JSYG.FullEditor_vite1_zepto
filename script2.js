@@ -111,7 +111,6 @@ window.addEventListener('DOMContentLoaded', function() {
     selector = "#openDocument"
     eventName = 'click'
     handler = () => {
-        console.log("openDocument---");
         //svgEditor.chooseFile().then(svgEditor.loadFile).catch(alert);
         svgEditor.chooseFile().then((arg) => svgEditor.loadFile(arg)).catch(alert);  // GUSA
     };
@@ -365,7 +364,6 @@ window.addEventListener('DOMContentLoaded', function() {
     selector = '#drawShapesOff'
     eventName = 'click'
     handler = () => {
-	    console.log("click Off");
             svgEditor.disableShapeDrawer();
             svgEditor.disableInsertElement();
             svgEditor.enableSelection();
@@ -536,7 +534,6 @@ window.addEventListener('DOMContentLoaded', function() {
     selector = `#${action}`
     eventName = 'click'
     handler = (arg) => {
-	    console.log("action", arg);
             svgEditor[action](arg);
     };
     target = document.querySelector(selector)
@@ -559,7 +556,6 @@ window.addEventListener('DOMContentLoaded', function() {
     selector = `#${property}`
     eventName = 'change'
     handler = function()  {
-		console.log("change", property);
             svgEditor[property] = this.checked;
             new JSYG(this).blur();
     };

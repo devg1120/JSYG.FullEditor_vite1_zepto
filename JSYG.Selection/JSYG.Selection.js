@@ -1,41 +1,13 @@
-/*jshint forin:false, eqnull:true*/
-/* globals JSYG*/
-/*
-(function(factory) {
-    
-    if (typeof module == "object" && typeof module.exports == "object") {
-      module.exports = factory( require("jquery"), require("jsyg"), require("jsyg-resizable"), require("jquery.hotkeys") );
-    }
-    else if (typeof define != "undefined" && define.amd) define("jsyg-selection",["jquery","jsyg","jsyg-resizable","jquery.hotkeys"],factory);
-    else if (typeof jQuery != "undefined" && typeof JSYG != "undefined") {
-        if (JSYG.Resizable) factory(jQuery,JSYG,JSYG.Resizable);
-        else throw new Error("JSYG.Resizable is needed");
-    }
-    else throw new Error("jQuery and JSYG are needed");
-    
-})(function($,JSYG,Resizable) {
-  */
 
-//import JSYG from "jsyg"
 import JSYG                from "../JSYG-wrapper/JSYG-wrapper.js"
 import StdConstruct        from "../JSYG.StdConstruct/JSYG.StdConstruct.js"
 import  Resizable          from "../JSYG.Resizable/JSYG.Resizable.js"
 
+import { isArrayLike } from "../jquery/src/core/isArrayLike.js";
+
 
     "use strict";
     
-    /**
-     * Sélection d'éléments par tracé d'un cadre avec la souris<br/><br/>
-     * @param arg optionnel, argument JSYG, conteneur sur lequel s'applique la selection (si non défini, ce sera window.document)
-     * @param opt optionnel, objet définissant les options. Si défini, le tracé de sélection est activé implicitement
-     * @returns {Selection}
-     * @example <pre>var select = new Selection();
-     * select.list = ".selectable"; //liste des éléments sélectionnables
-     * select.on("selectedlist",function(e,liste) {
-     * 	alert("j'ai sélectionné "+liste.length+" éléments");
-     * });
-     * select.enable();
-     */
 export default    function Selection(arg,opt) {
         /**
          * Liste des éléments sélectionnés
@@ -54,7 +26,6 @@ export default    function Selection(arg,opt) {
         if (opt) this.enable(opt);
     }
     
-    //Selection.prototype = new JSYG.StdConstruct();
     Selection.prototype = new StdConstruct();
     
     Selection.prototype.constructor = Selection;
@@ -182,8 +153,12 @@ export default    function Selection(arg,opt) {
      */
     Selection.prototype.addElmt = function(elmt,e) {
         
+	    console.log("selection addEmt");
+
         var node = new JSYG(elmt).addClass(this.classSelected)[0];
         
+	    console.log("node",node);
+	    console.dir(typeof node);
         if (new JSYG(this.list).index(elmt) == -1) throw new Error("L'élément n'est pas sélectionnable");
         
         if (this.selected.indexOf(node) != -1) throw new Error("L'élément est déjà dans la liste");
@@ -213,6 +188,28 @@ export default    function Selection(arg,opt) {
         this.trigger('deselect',this.node,e,node);
     };
     
+
+function each( obj, callback ) {
+		var length, i = 0;
+
+		if ( isArrayLike( obj ) ) {
+			length = obj.length;
+			for ( ; i < length; i++ ) {
+				if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
+					break;
+				}
+			}
+		} else {
+			for ( i in obj ) {
+				if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
+					break;
+				}
+			}
+		}
+
+		return obj;
+	};
+
     /**
      * définit la sélection
      * @param arg argument JSYG faisant référence à la sélection
@@ -220,12 +217,16 @@ export default    function Selection(arg,opt) {
      * @returns {Selection}
      */
     Selection.prototype.setSelection = function(arg,e) {
+
+       console.log("setSelection");
         
         var that = this;
         
         this.deselectAll(e);
         
-        new JSYG(arg).each(function() { that.addElmt(this,e); });
+        //new JSYG(arg).each(function() { that.addElmt(this,e); });
+        each(arg, function() { that.addElmt(this,e); });
+	    
         
         if (this.selected.length > 0) this.trigger('selectedlist',this.node,e,this.selected);
         
@@ -502,7 +503,8 @@ export default    function Selection(arg,opt) {
                     if (lastOver === cible) that.trigger('selectmove',that.node,e,lastOver);
                     else {
                         that.trigger('selectover',that.node,e,cible);
-                        new JSYG(cible).addClass(that.classOver);
+                        //new JSYG(cible).addClass(that.classOver);   
+                        cible.classList.add(that.classOver);    //GUSA
                     }
                     that.selectedOver = [cible];
                 }
@@ -515,8 +517,9 @@ export default    function Selection(arg,opt) {
                 var lastOver = that.selectedOver[0];
                 
                 if (lastOver) {
-                    
-                    new JSYG(lastOver).removeClass(that.classOver);
+                    console.log("mouseout");
+                    //new JSYG(lastOver).removeClass(that.classOver);
+                    lastOver.classList.add(that.classOver);    //GUSA
                     that.trigger('selectout',that.node,e,lastOver);
                     that.selectedOver = [];
                 }

@@ -1,76 +1,7 @@
-/*jshint forin:false, eqnull:true*/
-/* globals JSYG*/
-//import { TextEditor }   from "./JSYG.TextEditor/JSYG.TextEditor7.js"
-/*
-(factory => {
-    
-    if (typeof module == "object" && typeof module.exports == "object") {
-      
-      module.exports = factory(
-        require("jsyg"),
-        require("jsyg-editor"),
-        //require("jsyg-texteditor"),
-        require("jsyg-zoomandpan"),
-        require("jsyg-pathdrawer"),
-        require("jsyg-polylinedrawer"),
-        require("jsyg-shapedrawer"),
-        require("jsyg-undoredo"),
-        require("jquery.hotkeys")
-      );
-    }
-    else if (typeof define != "undefined" && define.amd) {
-      
-      define("jsyg-fulleditor",[
-        "jsyg",
-        "jsyg-editor",
-        //"jsyg-texteditor",
-        "jsyg-zoomandpan",
-        "jsyg-pathdrawer",
-        "jsyg-polylinedrawer",
-        "jsyg-shapedrawer",
-        "jsyg-undoredo",
-        "jquery.hotkeys"
-      ],factory);
-    }
-    else if (typeof JSYG != "undefined") {
-        
-        let deps = ["Editor","TextEditor","ZoomAndPan","PathDrawer","PolylineDrawer","ShapeDrawer","UndoRedo"];
-        
-        deps = deps.map(dep => {
-            if (!JSYG[dep]) throw new Error(`JSYG.${dep} is missing`);
-            return JSYG[dep];
-        });
-        
-        deps.unshift(JSYG);
-        
-        factory(...deps);
-    }
-    else throw new Error("JSYG is needed");
-    
-})((
-    JSYG,
-    Editor,
-    TextEditor,
-    ZoomAndPan,
-    PathDrawer,
-    PolylineDrawer,
-    ShapeDrawer,
-    UndoRedo
-) => {
-*/
-
-//import JSYG from "./JSYG"
-//import JSYG from "jsyg"
-//import  JSYG  from "./JSYG/dist/JSYG.js"
-//import  JSYG  from "./JSYG/JSYG.js"
-//import JSYG from "jsyg"
 import JSYG                from "./JSYG-wrapper/JSYG-wrapper.js"
 
 import { TextEditor }   from "./JSYG.TextEditor/JSYG.TextEditor7.js"
 
-//import UndoRedo from "./JSYG.UndoRedo/JSYG.UndoRedo.js"
-//import Editor from "./JSYG.Editor/JSYG.Editor.js"
-//import ZoomAndPan from "./JSYG.ZoomAndPan/JSYG.ZoomAndPan.js"
 import BoundingBox         from "./JSYG.BoundingBox/JSYG.BoundingBox.js"
 import Color               from "./JSYG.Color/JSYG.Color.js"
 import Editor              from "./JSYG.Editor/JSYG.Editor.js"
@@ -81,17 +12,13 @@ import ShapeDrawer         from "./JSYG.ShapeDrawer/JSYG.ShapeDrawer.js"
 import StdConstruct        from "./JSYG.StdConstruct/JSYG.StdConstruct.js"
 //import TextEditor          from "./JSYG.TextEditor/JSYG.TextEditor.js"
 import UndoRedo            from "./JSYG.UndoRedo/JSYG.UndoRedo.js"
-//import utils               from "./JSYG-utils/JSYG-utils.js"
 import ZoomAndPan          from "./JSYG.ZoomAndPan/JSYG.ZoomAndPan.js"
-//import ZoomAndPan          from "jsyg-zoomandpan"
 
     const slice = Array.prototype.slice;
 
-//export default class FullEditor extends JSYG.StdConstruct {
 export default class FullEditor extends JSYG {
         constructor(node, opt) {
             super(node,opt);
-            console.log("FullEditor super!!!")
             this._bindFunctions();
             
             this._init();
@@ -102,11 +29,10 @@ export default class FullEditor extends JSYG {
             
             if (opt) this.enable(opt);
 
-            this.testCall();
+            //this.testCall();
         }
 
         _initPlugins() {
-            console.log("_initPlugin", FullEditor._plugins);           
             FullEditor._plugins.forEach(this._createPlugin.bind(this));
             
             this._applyMethodPlugins("init");
@@ -498,7 +424,6 @@ export default class FullEditor extends JSYG {
             
             this.undoRedo = new UndoRedo();
             this.undoRedo.saveState();
-		console.log("this.undoRedo.saveState");
             
             this.undoRedo.on("change",() => {
                 //that.hideEditors();
@@ -566,7 +491,6 @@ export default class FullEditor extends JSYG {
          * @returns {JSYG.FullEditor}
          */
         static registerPlugin(plugin) {
-              console.log("registerPlugin", plugin);
             if (!plugin.name) throw new Error("Plugin must have a name property");
             
             if (this._plugins.some(({name}) => name == plugin.name))
@@ -578,7 +502,6 @@ export default class FullEditor extends JSYG {
         }
 
         _createPlugin(plugin) {
-              console.log("_createPlugin", plugin);
             plugin = Object.create(plugin);
             
             //plugin.set = JSYG.StdConstruct.prototype.set;
@@ -1616,7 +1539,6 @@ export default class FullEditor extends JSYG {
         insertSVGFile(file, e) {
             
             const that = this;
-             console.log("insertSVGFile");
             return this.readFile(file,"text")
                 .then(JSYG.parseSVG)
                 .then(svg => {
@@ -1722,7 +1644,6 @@ export default class FullEditor extends JSYG {
          * @returns {Promise}
          */
         readFile(file, readAs) {
-		console.log("*** readFile");
             return new Promise((resolve, reject) => {
                 
                 if (!window.FileReader) throw new Error("your navigator doesn't implement FileReader");
@@ -2192,8 +2113,4 @@ export default class FullEditor extends JSYG {
     FullEditor.prototype.importSVGAs = "image";
 
 
-//    JSYG.FullEditor = FullEditor;
-
-//    return FullEditor;
-//});
 
