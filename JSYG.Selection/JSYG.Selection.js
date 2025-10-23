@@ -153,13 +153,12 @@ export default    function Selection(arg,opt) {
      */
     Selection.prototype.addElmt = function(elmt,e) {
         
-	    console.log("selection addEmt");
 
-        var node = new JSYG(elmt).addClass(this.classSelected)[0];
-        
-	    console.log("node",node);
-	    console.dir(typeof node);
-        if (new JSYG(this.list).index(elmt) == -1) throw new Error("L'élément n'est pas sélectionnable");
+        //var node = new JSYG(elmt).addClass(this.classSelected)[0];
+        elmt.classList.add(this.classSelected); //GUSA
+        var node = elmt;
+
+        //if (new JSYG(this.list).index(elmt) == -1) throw new Error("L'élément n'est pas sélectionnable");
         
         if (this.selected.indexOf(node) != -1) throw new Error("L'élément est déjà dans la liste");
         
@@ -176,9 +175,13 @@ export default    function Selection(arg,opt) {
      * @param e Event (dans le cas à la méthode est appelée depuis un évènement)
      */
     Selection.prototype.removeElmt = function(elmt,e) {
+
+	// console.log("removeElmt");
         
-        var node = new JSYG(elmt).removeClass(this.classSelected)[0];
-        
+        //var node = new JSYG(elmt).removeClass(this.classSelected)[0];
+        elmt.classList.remove(this.classSelected); //GUSA
+        var node = elmt;
+
         var ind = this.selected.indexOf(node);
         
         if (ind == -1) throw new Error("L'élément n'est pas dans la liste");
@@ -218,7 +221,6 @@ function each( obj, callback ) {
      */
     Selection.prototype.setSelection = function(arg,e) {
 
-       console.log("setSelection");
         
         var that = this;
         
@@ -249,7 +251,7 @@ function each( obj, callback ) {
         
         var that = this,
         selected = this.selected.slice();
-        console.log("deselectAll")
+        //console.log("deselectAll")
         
         //new JSYG(this.list).removeClass(this.classSelected,this.classOver); //par précaution
 	let eles = document.querySelectorAll(this.list);  //GUSA
@@ -261,7 +263,8 @@ function each( obj, callback ) {
         this.trigger('deselectedlist',this.node,e,selected);
         
         this.selectedOver.forEach(function(elmt) {
-            elmt = new JSYG(elmt).removeClass(that.classSelected);
+            //elmt = new JSYG(elmt).removeClass(that.classSelected);
+            elmt.classList.remove(that.classSelected);  //GUSA
             that.trigger('selectout',that.node,e,elmt[0]);
         });
         
@@ -299,8 +302,9 @@ function each( obj, callback ) {
         if (this.resizableOptions) resize.set(this.resizableOptions);
         
         resize.on('dragstart',function(e) {
-            
-            list.each(function() {
+             console.log("dragstart");
+            //list.each(function() {
+            each(list, function() {  //GUSA
                 
                 var dim,
                 $this = new JSYG(this);
@@ -318,11 +322,13 @@ function each( obj, callback ) {
         });
         
         resize.on('drag',function(e) {
+
             
             var div = new JSYG(this),
             dimDiv = div.getDim('screen');
             
-            list.each(function() {
+            //list.each(function() {
+            each(list,function() {  //GUSA
                 
                 var elmt = new JSYG(this),
                 dimElmt = elmt.data("dimSelection"),
@@ -358,7 +364,8 @@ function each( obj, callback ) {
             
             var elmts = [];
             
-            list.each(function() {
+            //list.each(function() {  //GUSA
+            each(list, function() {  //GUSA
                 
                 var indOver = that.selectedOver.indexOf(this);
                 
@@ -374,10 +381,14 @@ function each( obj, callback ) {
             
             that.trigger('dragend',that.node,e,this);
             
-            new JSYG(this).remove();
+            //new JSYG(this).remove();
+            this.remove();  //GUSA
         });
         
-        resize.on('end',function() { new JSYG(this).remove(); });
+        resize.on('end',function() { 
+		//new JSYG(this).remove(); 
+		this.remove();  //GUSA
+	});
         
         resize.start(e);
         
@@ -386,9 +397,9 @@ function each( obj, callback ) {
     };
     
     Selection.prototype._getTarget = function(e) {
-        
+
+        /*
         var list = new JSYG(this.list);
-        
         if (list.index(e.target) !== -1) return e.target;
         
         var child = new JSYG(e.target),
@@ -397,7 +408,19 @@ function each( obj, callback ) {
         list.each(function() {
             if (child.isChildOf(this)) { target = this; return false; }
         });
-        
+
+        return target;
+
+        */
+
+	let list = document.querySelectorAll(this.list);  //GUSA
+        var child = new JSYG(e.target)
+        let target = null;
+
+        each(list, function() {
+            if (child.isChildOf(this)) { target = this; return false; }
+        });
+
         return target;
     };
     
@@ -419,11 +442,16 @@ function each( obj, callback ) {
                 
         this.disableShortCutSelectAll();
         
-        $(document).on("keydown",null,this.shortCutSelectAll,selectAll);
-        
+        //$(document).on("keydown",null,this.shortCutSelectAll,selectAll);
+         document.addEventListener('keydown', //GUSA
+               selectAll
+         );
         this.disableShortCutSelectAll = function() {
           
-            $(document).off("keydown",selectAll);
+            //$(document).off("keydown",selectAll);
+            document.addEventListener('keydown',  //GUSA
+               selectAll
+            );
             return this;
         };
         
@@ -521,7 +549,6 @@ function each( obj, callback ) {
                 var lastOver = that.selectedOver[0];
                 
                 if (lastOver) {
-                    console.log("mouseout");
                     //new JSYG(lastOver).removeClass(that.classOver);
                     lastOver.classList.add(that.classOver);    //GUSA
                     that.trigger('selectout',that.node,e,lastOver);
