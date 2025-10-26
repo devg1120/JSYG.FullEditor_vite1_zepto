@@ -271,6 +271,33 @@ export default   function JSYG(arg,context) {
         });
     };
 	
+import { isArrayLike } from "../jquery/src/core/isArrayLike.js";
+
+    //JSYG.prototype.each = function(obj, callback) {
+    JSYG.prototype.each = function( callback) {
+                let obj = this;
+                var length, i = 0;
+
+                if ( isArrayLike( obj ) ) {
+                        length = obj.length;
+                        for ( ; i < length; i++ ) {
+                                if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
+                                        break;
+                                }
+                        }
+                } else {
+                        for ( i in obj ) {
+                                if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
+                                        break;
+                                }
+                        }
+                }
+
+                return obj;
+        };
+
+
+/*
     JSYG.each = function(list,callback) {
 		
         if (typeof list == 'object' && typeof list.numberOfItems == "number") { //SVGList
@@ -286,7 +313,7 @@ export default   function JSYG(arg,context) {
         }
         else return $.each(list,callback);
     };
-	
+*/
     JSYG.makeArray = function(list) {
 						
         if (typeof list == 'object' && typeof list.numberOfItems == "number") { //SVGList

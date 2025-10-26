@@ -1474,12 +1474,16 @@ export default class FullEditor extends JSYG {
         }
 
         insertElement(elmt, pos, _preventEvent) {
+
+		console.log("insertElement");
             
             let textNode;
             
             elmt = new JSYG(elmt);
             
-            elmt.appendTo( this._getLayerSelector() );
+            //elmt.appendTo( this._getLayerSelector() );  //GUSA
+	    let target = document.querySelectorAll(this._getLayerSelector())
+            target[0].appendChild(elmt[0])
             
             if (JSYG.svgTexts.includes(elmt.getTag()) && !elmt.text()) {
                 textNode = document.createTextNode("I");
