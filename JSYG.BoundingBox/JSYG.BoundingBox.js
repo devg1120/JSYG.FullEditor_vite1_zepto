@@ -209,10 +209,16 @@ export  default function BoundingBox(arg,opt) {
     BoundingBox.prototype._setType = function(type) {
         
         if (type === 'svg' && (this._type!=='svg' || !this.container || !this.hasOwnProperty('container') /*obligatoire pour les constructeurs qui héritent de boundingBox (Editable)*/)) {
-            
-            this.container = new JSYG('<g>')[0];
+            /*
+            this.container = new JSYG('<g>')[0];  //GUSA
             this.pathBox = new JSYG('<path>').appendTo(this.container)[0];
             this.pathShadow = null;
+*/
+            this.container = new JSYG('<g>')[0];
+            this.pathBox = new JSYG('<path>')[0];
+	    this.container.appendChild(this.pathBox);
+            this.pathShadow = null;
+
             
         } else if (type === 'html' && (this._type!=='html' || !this.container  || !this.hasOwnProperty('container'))) {
             

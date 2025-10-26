@@ -98,7 +98,9 @@ export default    function Editor(arg,opt) {
         this._list = null;
         this._target = null;
 
-        this._tempoContainer = new JSYG('<g>').addClass('tempoContainer')[0];
+        //this._tempoContainer = new JSYG('<g>').addClass('tempoContainer')[0]; //GUSA
+        this._tempoContainer = new JSYG('<g>')[0];
+        this._tempoContainer.classList.add('tempoContainer');
 
         if (arg) this.setNode(arg);
         if (opt) this.enable(opt);

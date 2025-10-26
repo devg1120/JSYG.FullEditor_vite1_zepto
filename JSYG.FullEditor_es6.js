@@ -1137,7 +1137,8 @@ export default class FullEditor extends JSYG {
             
             editor.selection.multiple = true;
             
-            new JSYG(editor.container).on("dblclick",e => {
+            //new JSYG(editor.container).on("dblclick",e => {  //GUSA
+            new JSYG(editor.container)[0].addEventListener("dblclick",e => {
                 
                 const target = editor.target();
                 
