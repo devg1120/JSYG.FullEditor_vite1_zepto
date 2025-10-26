@@ -374,6 +374,7 @@ export default class FullEditor extends JSYG {
          * @returns {JSYG.FullEditor}
          */
         addLayer() {
+		console.log("addLaayer");
             const nb = ++this._nbLayers;
             const id = `layer${nb}`;
             const g = new JSYG('<g>').addClass("layer").attr("id",id).appendTo( this._getDocumentSelector() );
@@ -728,23 +729,52 @@ export default class FullEditor extends JSYG {
 
         _insertFrame() {
             const mainFrame = this.zoomAndPan.innerFrame;
-            const content = new JSYG(mainFrame).children().detach();
-
-            this._frameShadow = new JSYG("<rect>")
+            //const content = new JSYG(mainFrame).children().detach();
+		/*
+            const content2 = new JSYG(mainFrame);
+            const children = content2[0].children;
+            for (const child of children) {
+               content2[0].removeChild(child);
+           }
+	   */
+            console.log("_insertFrame");
+  /*
+            this._frameShadow = new JSYG("<rect>")          //GUSA
                 .attr({x:2,y:2})
                 .addClass("jsyg-doc-shadow")
                 .appendTo(mainFrame)[0];
-
+  */
+            let elem = new JSYG("<rect>")
+            elem.attr({x:2,y:2})
+            elem[0].classList.add("jsyg-doc-shadow")
+            mainFrame.appendChild(elem[0]);
+            this._frameShadow = elem;
+/*
             this._frame = new JSYG("<rect>")
                 .attr({x:0,y:0})
                 .addClass("jsyg-doc-frame")
                 .appendTo(mainFrame)[0];
-
+ */
+            elem = new JSYG("<rect>")
+            elem.attr({x:0,y:0})
+            elem[0].classList.add("jsyg-doc-frame")
+            mainFrame.appendChild(elem[0]);
+            this._frame = elem;
+/*
             this.containerDoc = new JSYG("<g>")
                 .attr("id",this.idContainer)
                 .append(content)
                 .appendTo(mainFrame)
             [0];
+*/
+
+            elem = new JSYG("<g>")
+            elem.attr("id",this.idContainer)
+            //elem[0].appendChild(content2[0])
+            //elem[0].appendChild(content2[0])
+            mainFrame.appendChild(elem[0]);
+            this.containerDoc = elem;
+
 
             this._adjustSize();
 
@@ -752,6 +782,7 @@ export default class FullEditor extends JSYG {
         }
 
         _removeFrame() {
+		/*
             const container = new JSYG(this.containerDoc);
             const content = container.children();
 
@@ -760,7 +791,7 @@ export default class FullEditor extends JSYG {
             container.remove();
 
             content.appendTo(this.zoomAndPan.innerFrame);
-
+*/
             return this;
         }
 
@@ -864,8 +895,12 @@ export default class FullEditor extends JSYG {
                 
                 const modele = that.shapeDrawerModel;
                 if (!modele) throw new Error("You must define a model");
-                
-                const shape = new JSYG(modele).clone().appendTo( that._getLayerSelector() );
+
+                //const shape = new JSYG(modele).clone().appendTo( that._getLayerSelector() );  // GUSA
+                const shape = new JSYG(modele).clone();
+                console.log(that._getLayerSelector())
+                let target = document.querySelectorAll(that._getLayerSelector());
+                target[0].appendChild(shape[0])
                 const tag = shape.getTag();
                 let drawer;
                 
